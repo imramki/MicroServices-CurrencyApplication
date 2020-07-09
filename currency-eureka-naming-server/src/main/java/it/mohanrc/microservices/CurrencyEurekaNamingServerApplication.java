@@ -2,14 +2,14 @@ package it.mohanrc.microservices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
-@EnableDiscoveryClient
-public class LimitsServiceApplication {
+@EnableEurekaServer
+public class CurrencyEurekaNamingServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LimitsServiceApplication.class, args);
+		SpringApplication.run(CurrencyEurekaNamingServerApplication.class, args);
 	}
 
 }
