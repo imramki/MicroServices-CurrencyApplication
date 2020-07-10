@@ -24,7 +24,7 @@ To view the console of H2 we can add the config in application.properties
 spring.h2.console.enabled=true
 http://localhost:8000/h2-console/
 
-While running two instance with same H2 DB connection we will get already accessing error. For that we need to add spring.datasource.url=jdbc:h2:~/ipinbarbot;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+While running two instance with same H2 DB connection we will get already accessing error. For that we need to add spring.datasource.url=jdbc:h2:file:F:/MyWorks/Spring/db-h2/currency-exchange;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
 in the application.properties
 
 RestTemplate:
@@ -68,7 +68,39 @@ in the @RibbonClient annotation and refer with Eureka server to fetch the list o
 (commented the config from application.properties)
 #currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://localhost:8001
 
+Zuul: Api Gateway
+Api Gateway is used to implement common functionality across all the micro services.
+1) Authentication, Authorization and Security
+2) Logging
+3) Aggregating group of services
 
+New component is created as currency-zuul-api-gateway-server with zuul as dependency
+Add @EnableZuulProxy to the spring boot application class, and also register this service class with naming server to
+make a request using the service name.
+
+Once registered we need to extend ZuulFilter to log the request or response throught out the micro services.
+CurrencyExchangService URL will be http://localhost:8001/currency-exchange/from/USD/to/INR
+When we redirect via Zuul we need to call by using the service name of CurrencyExchangService.
+http://localhost:8765/{application-name}/{URI}
+http://localhost:8765/currency-exchange-service/currency-exchange/from/USD/to/INR
+Now the currency exchange request will be logged in Zuul Api Gateway component, likewise we can implement 
+security for all other services in Zuul Api Gateway server component.
+ 
+If we want to consume the CurrencyExchangService from CurrencyConversionService we need to do the following
+changes to the CurrencyExchangeServiceProxy we created early in CurrencyConversionService.
+1st Change: We need to point to zuul api gateway in FeignClient
+//@FeignClient(name = "currency-exchange-service")
+@FeignClient(name = "currency-zuul-api-gateway-server")
+
+2nd Change: We need to change the GetMapping to use currency-exchange-service.
+//@GetMapping(value = "currency-exchange/from/{from}/to/{to}")
+@GetMapping(value = "currency-exchange-service/currency-exchange/from/{from}/to/{to}")
+
+Now if we call the CurrencyConversionService it will go through CurrencyExchangService via Zuul Api Gateway
+http://localhost:8101/currency-conversion-feign/from/EUR/to/INR/quantity/1000
+
+If we want to redirect the CurrencyConversionService to Zuul Api Gateway Server we can do like this
+http://localhost:8765/currency-conversion-service/currency-conversion-feign/from/EUR/to/INR/quantity/1000 
 
 
 
