@@ -3,6 +3,8 @@ package it.mohanrc.microservices.controller;
 import it.mohanrc.microservices.model.CurrencyConversion;
 import it.mohanrc.microservices.model.ExchangeValue;
 import it.mohanrc.microservices.restclient.CurrencyExchangeServiceProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.Map;
 
 @RestController
 public class CurrencyConversionController {
+
+    private Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private Environment environment;
@@ -58,6 +62,7 @@ public class CurrencyConversionController {
                         exchangeValue.getConversionMultiple(), quantity,
                         quantity.multiply(exchangeValue.getConversionMultiple()));
         currencyConversion.setPort(exchangeValue.getPort());//setting to check which instance of currency exchange service
+        LOG.info("{}", currencyConversion);
         return currencyConversion;
     }
 }

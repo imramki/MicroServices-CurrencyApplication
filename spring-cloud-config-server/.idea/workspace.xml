@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4003690-9a91-435b-8fb2-761c956a461d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../currency-zuul-api-gateway-server/src/main/java/it/mohanrc/microservices/filter/ZuulLoggingFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../currency-conversion-service/src/main/java/it/mohanrc/microservices/restclient/CurrencyExchangeServiceProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-conversion-service/src/main/java/it/mohanrc/microservices/restclient/CurrencyExchangeServiceProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-conversion-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-conversion-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-conversion-service/src/main/java/it/mohanrc/microservices/CurrencyConversionServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-conversion-service/src/main/java/it/mohanrc/microservices/CurrencyConversionServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-conversion-service/src/main/java/it/mohanrc/microservices/controller/CurrencyConversionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-conversion-service/src/main/java/it/mohanrc/microservices/controller/CurrencyConversionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-exchange-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-exchange-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-exchange-service/src/main/java/it/mohanrc/microservices/currencyexchangeservice/CurrencyExchangeServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-exchange-service/src/main/java/it/mohanrc/microservices/currencyexchangeservice/CurrencyExchangeServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-exchange-service/src/main/java/it/mohanrc/microservices/currencyexchangeservice/controller/CurrencyExchangeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-exchange-service/src/main/java/it/mohanrc/microservices/currencyexchangeservice/controller/CurrencyExchangeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-property-config-repo" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-property-config-repo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-zuul-api-gateway-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-zuul-api-gateway-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-zuul-api-gateway-server/src/main/java/it/mohanrc/microservices/CurrencyZuulApiGatewayServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-zuul-api-gateway-server/src/main/java/it/mohanrc/microservices/CurrencyZuulApiGatewayServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../currency-zuul-api-gateway-server/src/main/java/it/mohanrc/microservices/filter/ZuulLoggingFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../currency-zuul-api-gateway-server/src/main/java/it/mohanrc/microservices/filter/ZuulLoggingFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../limits-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../limits-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../limits-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../limits-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spring-cloud-config-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/spring-cloud-config-server/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/spring-cloud-config-server/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,7 +36,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spring-cloud-config-server/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
@@ -34,9 +45,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spring-cloud-config-server/pom.xml">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -49,7 +64,15 @@
       <list>
         <option value="$PROJECT_DIR$/spring-cloud-config-server/src/main/java/it/mohanrc/microservices/SpringCloudConfigServerApplication.java" />
         <option value="$PROJECT_DIR$/spring-cloud-config-server/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/spring-cloud-config-server/pom.xml" />
       </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
     </option>
   </component>
   <component name="MavenProjectNavigator">
@@ -71,6 +94,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -115,7 +139,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -167,17 +190,18 @@
       <updated>1594095398828</updated>
       <workItem from="1594095400116" duration="2904000" />
       <workItem from="1594255766185" duration="741000" />
-      <workItem from="1594340053295" duration="283000" />
+      <workItem from="1594340053295" duration="1404000" />
+      <workItem from="1594458967319" duration="1380000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3928000" />
+    <option name="totallyTimeSpent" value="6429000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31089258" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30711043" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -223,13 +247,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spring-cloud-config-server/pom.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/spring-cloud-config-server/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="117" selection-start-line="3" selection-start-column="117" selection-end-line="3" selection-end-column="117" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spring-cloud-config-server/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
         </state>
       </provider>
     </entry>
