@@ -194,3 +194,43 @@ the current instance of LimitsService which is running in port 8080.
 Step2: Then send a message to AMQP exchange about information event change.
 Step3: All the subscribers to who are all subscribed to AMQP exchange will receive the event and make refresh to 
 update their config's.
+
+Hystrix: Circuit Breaker
+Hystrix helps to control the interaction between services by providing fault tolerance. It improves overall resilience 
+of the system by isolating the failing services and stopping the cascading effect of failures.
+
+A service failure in the lower level of services can cause cascading failure all the way up to the user. 
+When calls to a particular service exceed circuitBreaker.requestVolumeThreshold (default: 20 requests) and 
+the failure percentage is greater than circuitBreaker.errorThresholdPercentage (default: >50%) in a rolling 
+window defined by metrics.rollingStats.timeInMilliseconds (default: 10 seconds), the circuit opens and the 
+call is not made. In cases of error and an open circuit, a fallback can be provided by the developer.
+
+Having an open circuit stops cascading failures and allows overwhelmed or failing services time to recover. 
+The fallback can be another Hystrix protected call, static data, or a sensible empty value. Fallbacks may be 
+chained so that the first fallback makes some other business call, which in turn falls back to static data.
+
+We are adding the Hystrix to CurrencyConversionService where we are depending on the CurrencyExchangService. If the 
+CurrencyExchangService is failed or causing slowness, it will affect the entire CurrencyConversionService, so here 
+we will implement Hystrix to give the fallback method during the failures of CurrencyExchangService.
+
+To enable Hystrix and Hystrix Dashboard we need to add the below dependency.
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+</dependency>
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+</dependency>
+
+Now add the @EnableCircuitBreaker and @EnableHystrixDashboard in the CurrencyConversionService Application class.
+
+Then we can add the fallback method during the service call of CurrencyExchangService, using the below command
+@HystrixCommand(fallbackMethod = "retrieveExchangeValueFallback")
+we can give the default implementation instead of error response. 
+http://localhost:8101/hystrix to view the dashboard and give the monitor URL as 
+http://localhost:8101/hystrix.stream to view the number of success and failures calls happened between 
+CurrencyConversionService and CurrencyExchangService.
+
+
+

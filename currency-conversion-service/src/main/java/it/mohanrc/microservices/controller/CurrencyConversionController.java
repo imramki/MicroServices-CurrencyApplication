@@ -1,8 +1,10 @@
 package it.mohanrc.microservices.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import it.mohanrc.microservices.model.CurrencyConversion;
 import it.mohanrc.microservices.model.ExchangeValue;
 import it.mohanrc.microservices.restclient.CurrencyExchangeServiceProxy;
+import it.mohanrc.microservices.service.CurrencyExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +27,17 @@ public class CurrencyConversionController {
     @Autowired
     private Environment environment;
 
+    @Autowired  //Traditional Rest Service Approach
+    private CurrencyExchangeService currencyExchangeService;
+
     @Autowired
     private CurrencyExchangeServiceProxy currencyExchangeServiceProxy;
 
     @GetMapping(value = "currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertCurrency(@PathVariable String from, @PathVariable String to,
-                                                    @PathVariable BigDecimal quantity) {
+                                              @PathVariable BigDecimal quantity) {
         String port = environment.getProperty("local.server.port");
-        ExchangeValue exchangeValue = retrieveExchangeValue(from, to);
+        ExchangeValue exchangeValue = currencyExchangeService.retrieveExchangeValue(from, to);
         CurrencyConversion currencyConversion =
                 new CurrencyConversion(exchangeValue.getId(), from, to,
                         exchangeValue.getConversionMultiple(), quantity, quantity.multiply(exchangeValue.getConversionMultiple()));
@@ -40,7 +45,7 @@ public class CurrencyConversionController {
         return currencyConversion;
     }
 
-    private ExchangeValue retrieveExchangeValue(String from, String to) {
+    /*private ExchangeValue retrieveExchangeValue(String from, String to) {
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("from", from);
         uriVariables.put("to", to);
@@ -50,11 +55,11 @@ public class CurrencyConversionController {
                         .getForEntity("http://localhost:8001/currency-exchange/from/{from}/to/{to}",
                                 ExchangeValue.class, uriVariables);
         return responseEntity.getBody();
-    }
+    }*/
 
     @GetMapping(value = "currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertCurrencyFeign(@PathVariable String from, @PathVariable String to,
-                                                    @PathVariable BigDecimal quantity) {
+                                                   @PathVariable BigDecimal quantity) {
         String port = environment.getProperty("local.server.port");
         ExchangeValue exchangeValue = currencyExchangeServiceProxy.retrieveExchangeValue(from, to);
         CurrencyConversion currencyConversion =
@@ -65,4 +70,6 @@ public class CurrencyConversionController {
         LOG.info("{}", currencyConversion);
         return currencyConversion;
     }
+
+
 }
