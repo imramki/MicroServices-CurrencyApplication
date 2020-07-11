@@ -1,4 +1,4 @@
-####CURRENCY CONVERSION APP BASED ON MICRO SERVICES
+#**CURRENCY CONVERSION APPLICATION BASED ON MICRO SERVICES**
 ##### Implemented below Spring Cloud solutions 
 * Spring Cloud Config for dynamic config changes without restarting the applications
 * Feign for http communication between micro services 
@@ -20,7 +20,7 @@ Currency Eureka Naming Server		|8761
 Netflix Zuul API Gateway Server		|8765
 Zipkin Distributed Tracing Server	|9411
 
-#####Spring Cloud Config Server:
+#####Spring Cloud Config Server:  
 **sample**: http://localhost:port/propertyname/default  
 **actual**: http://localhost:8888/limits-service/default
 
@@ -78,7 +78,7 @@ LimitsService, CurrencyExchangService, CurrencyConversionService all registered 
 Now we can remove the **listOfServers** config for the Ribbon we did in CurrencyConversionService because Ribbon will 
 use the Eureka Server to find out the list of instances available to distribute the load balance. Ribbon will use the name we registered 
 in the @RibbonClient annotation and refer with Eureka server to fetch the list of instances. 
-(commented this config from application.properties)
+(commented this config from application.properties)  
 #######currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://localhost:8001
 
 **Zuul: Api Gateway**  
@@ -167,7 +167,7 @@ If we restart these services and give request to CurrencyConversionService. Now 
 Zipkin dashboard http://localhost:9411/zipkin to find the traces and we can also view the dependency graph 
 between these 3 components.
 
-**In Zipkin dashboard:**  
+**Zipkin dashboard:**  
 Go to Discover menu, select serviceName from the drop down and we can see our 3 components listed in the drop down. 
 Select any one of the component and click search. The result will display the list of calls happened and we can able to 
 see the total traces, communication and success/failure-reasons between these 3 services and also the time taken to 
@@ -202,7 +202,7 @@ http://localhost:8081/actuator/refresh
 There is an overhead here, Imagine if we have more than 50 instances of LimitsService we cannot call every URL manually 
 to refresh the property value changes. This problem is solved by using SpringCloudBus.
 
-**Spring Cloud Bus:**(it will either work Kafka or RabbitMQ, here we are using RabbitMQ as amqp transport protocol)  
+**Spring Cloud Bus:** (it will either work Kafka or RabbitMQ, here we are using RabbitMQ as amqp transport protocol)  
 We need to add spring-cloud-starter-bus-amqp dependency to LimitsService and SpringCloudConfigServer. Now the all 
 the LimitsService instances are registered with SpringCloudBus. When there is any change in config file and if we call  
 the URL http://localhost:8080/actuator/bus-refresh with POST method to refresh the config change, the 
@@ -243,7 +243,7 @@ Now add **@EnableCircuitBreaker** and **@EnableHystrixDashboard** in the Currenc
 Also we can add the fallback method during the service call to CurrencyExchangeService, 
 fallback can be mentioned using the below command  
 **@HystrixCommand(fallbackMethod = "retrieveExchangeValueFallback")**  
-We can give the default or static implementation instead of error response.  
+We can give the default or static implementation instead of error response in the fallback method.  
 http://localhost:8101/hystrix to view the dashboard and input the monitor URL as 
 http://localhost:8101/hystrix.stream to view the number of success and failures calls happened between 
 CurrencyConversionService and CurrencyExchangeService.
