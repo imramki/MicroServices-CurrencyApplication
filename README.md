@@ -1,4 +1,4 @@
-#**CURRENCY CONVERSION APPLICATION BASED ON MICRO SERVICES**
+#### CURRENCY CONVERSION APPLICATION BASED ON MICRO SERVICES
 ##### Implemented below Spring Cloud solutions 
 * Spring Cloud Config for dynamic config changes without restarting the applications
 * Feign for http communication between micro services 
@@ -20,7 +20,7 @@ Currency Eureka Naming Server		|8761
 Netflix Zuul API Gateway Server		|8765
 Zipkin Distributed Tracing Server	|9411
 
-#####Spring Cloud Config Server:  
+**Spring Cloud Config Server:**  
 **sample**: http://localhost:port/propertyname/default  
 **actual**: http://localhost:8888/limits-service/default
 
@@ -73,13 +73,13 @@ which will by default register all the instances of applications to the Eureka s
 Eureka Server URL explicitly we can configure in application.properties like below.  
 eureka.client.service-url.default-zone=http://localhost:8761
 
-LimitsService, CurrencyExchangService, CurrencyConversionService all registered with Eureka Server by doing the above steps.
+LimitsService, CurrencyExchangeService, CurrencyConversionService all registered with Eureka Server by doing the above steps.
 
 Now we can remove the **listOfServers** config for the Ribbon we did in CurrencyConversionService because Ribbon will 
 use the Eureka Server to find out the list of instances available to distribute the load balance. Ribbon will use the name we registered 
 in the @RibbonClient annotation and refer with Eureka server to fetch the list of instances. 
 (commented this config from application.properties)  
-#######currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://localhost:8001
+#currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://localhost:8001
 
 **Zuul: Api Gateway**  
 Api Gateway is used to implement common functionality across all the micro services. (like Spring AOP used for single service)
@@ -92,14 +92,14 @@ add **@EnableZuulProxy** to the spring boot application class and also register 
 make a request using the service name of the ZUUL.
 
 Once ZUUL is registered, we need to extend **ZuulFilter** to log the request or response during the communication between the micro services.
-CurrencyExchangService URL will be  http://localhost:8001/currency-exchange/from/USD/to/INR  
+CurrencyExchangeService URL will be  http://localhost:8001/currency-exchange/from/USD/to/INR  
 When we redirect services via Zuul we need to call this service by using the application name like below.  
 **http://localhost:8765/{application-name}/{URI}**
 http://localhost:8765/currency-exchange-service/currency-exchange/from/USD/to/INR  
 Now the currency exchange request will be logged in Zuul Api Gateway component, likewise we can implement 
 security, authentication etc., for all other services in the Zuul Api Gateway server component.
  
-If we want to consume the CurrencyExchangService from CurrencyConversionService we need to do the following
+If we want to consume the CurrencyExchangeService from CurrencyConversionService we need to do the following
 changes to the CurrencyExchangeServiceProxy we created early.  
 **1st Change:** We need to point to ZUUL api gateway in Feign Proxy class  
 //@FeignClient(name = "currency-exchange-service")  
@@ -121,7 +121,7 @@ uses Brave as the tracing library that adds unique ids to each web request that 
 
 We need to add the spring-cloud-sleuth dependency in the required components to have each 
 request a unique id and the request id will span across all components. 
-Adding sleuth dependency to CurrencyConversionService, CurrencyExchangService, ZuulApiGatewayServer components.
+Adding sleuth dependency to CurrencyConversionService, CurrencyExchangeService, ZuulApiGatewayServer components.
 After adding the dependencies, we need to create 
 Auto Sampler bean from Brave library(which is inbuilt used by sleuth).
   
@@ -130,7 +130,7 @@ public Sampler defaultSampler() {
      return Sampler.ALWAYS_SAMPLE;  
 }
 
-Now each request from CurrencyConversionService to CurrencyExchangService will pass through ZuulApiGatewayServer and 
+Now each request from CurrencyConversionService to CurrencyExchangeService will pass through ZuulApiGatewayServer and 
 each request will have the unique request id in each console's of the 3 components.
 
 **Zipkin Distributed Tracing Server:**  
@@ -143,7 +143,7 @@ After downloading we can run the server using the command **java -jar zipkin-ser
 Zipkin server is started in the port http://localhost:9411/zipkin
 
 The Zipkin server will listen to Rabbit MQ server, so that all the trace related information's are enqueued to the RabbitMQ 
-from CurrencyConversionService, CurrencyExchangService, ZuulApiGatewayServer and these traces will be read by Zipkin server.
+from CurrencyConversionService, CurrencyExchangeService, ZuulApiGatewayServer and these traces will be read by Zipkin server.
 
 For this we need to install RabbitMQ.   
 **Step1:** Check the compatible version of RabbitMQ and Erlang in the link.  https://erlang.org/download/otp_versions_tree.html  
@@ -161,7 +161,7 @@ java -jar zipkin-server-2.21.5-exec.jar
 Now the Zipkin server will listen to RabbitMQ for the incoming trace information's.
 
 After this we need to add spring-cloud-sleuth-zipkin and spring-cloud-starter-bus-amqp to the applications
-CurrencyConversionService, CurrencyExchangService, ZuulApiGatewayServer to send the trace info to the RabbitMQ.
+CurrencyConversionService, CurrencyExchangeService, ZuulApiGatewayServer to send the trace info to the RabbitMQ.
 
 If we restart these services and give request to CurrencyConversionService. Now we need to visit 
 Zipkin dashboard http://localhost:9411/zipkin to find the traces and we can also view the dependency graph 
